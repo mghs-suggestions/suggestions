@@ -14,7 +14,7 @@ export default class Filters extends React.Component {
       <ul className="filters">
         <li>
           <select value={ this.props.author } onChange={ this.handleAuthorChange.bind(this) }>
-            <option value="">Filter by poet</option>
+            <option value="">Filter by category</option>
             { this.props.authors.map((author, i) => {
               if (!author) { return false; };
 

@@ -10,7 +10,7 @@ export default class Quote extends React.Component {
 
   render() {
     const quote = this.props.quote,
-          author = quote.author && (quote.author + (quote.interlocutor && ' to ' + quote.interlocutor)),
+          author = quote.author,
           date = quote.date;
 
     return (

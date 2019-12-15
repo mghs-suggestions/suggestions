@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { orderBy } from 'lodash';
 
-import { checkAuth, load, updateCell } from '../helpers/spreadsheet';
+import { checkAuth, load, updateCell,appendRow } from '../helpers/spreadsheet';
 import { hash } from '../helpers/utils';
 import * as ls from '../helpers/localStorage';
 
@@ -67,7 +67,7 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <h1 className="brand">“Quotes”</h1>
+        <h1 className="brand">SRC Suggestions</h1>
         { this.renderContent() }
       </div>
     );
@@ -91,7 +91,7 @@ class App extends Component {
 
           <hr />
 
-          <h2>{ this.state.quotes.length} quotes</h2>
+          <h2>{ this.state.quotes.length} suggestions</h2>
           <Filters
             authors={ this.state.authors }
             author={ this.state.author }
@@ -99,18 +99,19 @@ class App extends Component {
             order={ this.state.order }
             setOrder={ this.setOrder.bind(this) } />
           <div className="quotes">
-            { quotes.map((quote, i) => {
-              if (this.state.author && quote.author !== this.state.author) {
-                return false;
-              }
-
-              return (
-                <Quote
-                  key={ i }
-                  quote={ quote }
-                  toggleLike={ this.toggleLike.bind(this) } />
-              );
-            }) }
+            {
+              quotes.map((quote, i) => {
+                if (this.state.author && quote.author !== this.state.author) {
+                  return false;
+                }
+                return (
+                    <Quote
+                        key={ i }
+                        quote={ quote }
+                        toggleLike={ this.toggleLike.bind(this) } />
+                );
+              })
+            }
           </div>
         </div>
       );
@@ -197,7 +198,7 @@ class App extends Component {
       }, () => {
         if (save) {
           // Now save the data to the spreadsheet
-          updateCell('E', quote.row, quote.likes, null, (error) => {
+          updateCell('D', quote.row, quote.likes, null, (error) => {
             // In case an error occured while saving, toggle the state back
             this.toggleLike(quote, false);
           });
@@ -205,7 +206,6 @@ class App extends Component {
       });
     }
   }
-
 }
 
 export default App;

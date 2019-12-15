@@ -36,8 +36,7 @@ export function load(callback) {
             dateParsed = Date.parse(date),
             text = quote[1].split('\n'), // Split paragraphs
             author = quote[2] && quote[2].trim(),
-            interlocutor = quote[3] || '',
-            likes = parseInt(quote[4], 10) || 0,
+            likes = parseInt(quote[3], 10) || 0,
             id = hash(text), // Generate an ID by hashing the quote
             liked = userLikes.indexOf(id) > -1 ? true : false;
 
@@ -56,7 +55,6 @@ export function load(callback) {
           date,
           text,
           author,
-          interlocutor,
           likes,
           liked
         }
@@ -86,5 +84,14 @@ export function updateCell(column, row, value, successCallback, errorCallback) {
     range: 'Sheet1!' + column + row,
     valueInputOption: 'USER_ENTERED',
     values: [ [value] ]
+  }).then(successCallback, errorCallback);
+}
+
+export function appendRow(value, successCallback, errorCallback) {
+  window.gapi.client.sheets.spreadsheets.values.append({
+    spreadsheetId: config.spreadsheetId,
+    range: 'Sheet1!A:D',
+    valueInputOption: 'USER_ENTERED',
+    values: [ ['12/12/2019','test','test',8] ]
   }).then(successCallback, errorCallback);
 }
